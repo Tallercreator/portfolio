@@ -23,11 +23,18 @@
   --n-800: #23282d;
   --n-900: #14181b;
 
-  /* Акцент — ПЛЕЙСХОЛДЕР. Ждёт референсов.
-     Требование: контраст с --n-0 не ниже 4.5:1 для текста. */
-  --a-400: #4b7fd6;
-  --a-500: #2f5fb3;
-  --a-600: #234a8c;
+  /*
+    Розовый в двух значениях, и это не вкусовщина, а арифметика контраста.
+    Яркий #FF2E8A даёт на белом 3.38:1 — этого хватает графике и фокусу,
+    но не хватает тексту. Поэтому для текста на светлом взят более
+    глубокий #D6006F: 4.97:1, то есть AA проходит.
+    На тёмном фоне всё наоборот — там читается как раз яркий (5.11:1).
+  */
+  --p-vivid: #ff2e8a;
+  --p-text: #d6006f;
+  --p-text-hover: #b4005c;
+  --p-soft: #ffe7f1;
+  --p-soft-dark: #33101f;
 
   /* Типографика: модульная шкала, шаг 1.2, база 17px.
      Значения зафиксированы в rem, не считаются в рантайме — так они предсказуемы. */
@@ -40,6 +47,7 @@
   --t-2xl: 2.25rem; /* 36 */
   --t-3xl: 3rem; /* 48 */
   --t-4xl: 3.75rem; /* 60 */
+  --t-5xl: 4.75rem; /* 76 — только для строки в герое */
 
   --lh-tight: 1.1;
   --lh-snug: 1.25;
@@ -50,6 +58,8 @@
   --fw-medium: 500;
   --fw-semibold: 600;
 
+  /* Чем крупнее кегль, тем плотнее трекинг — иначе крупный текст рассыпается. */
+  --tracking-display: -0.035em;
   --tracking-tight: -0.02em;
   --tracking-normal: 0;
   --tracking-wide: 0.06em;
@@ -91,9 +101,12 @@
   --color-border: var(--n-200);
   --color-border-strong: var(--n-300);
 
-  --color-accent: var(--a-500);
-  --color-accent-hover: var(--a-600);
-  --color-focus: var(--a-400);
+  /* accent — то, что можно набирать текстом. vivid — то, чем можно заливать. */
+  --color-accent: var(--p-text);
+  --color-accent-hover: var(--p-text-hover);
+  --color-accent-vivid: var(--p-vivid);
+  --color-accent-surface: var(--p-soft);
+  --color-focus: var(--p-vivid);
 
   /* Сетка страницы */
   --measure: 68ch; /* комфортная длина строки для текста кейса */
@@ -123,9 +136,11 @@
     --color-border: var(--n-700);
     --color-border-strong: var(--n-600);
 
-    --color-accent: var(--a-400);
-    --color-accent-hover: var(--a-400);
-    --color-focus: var(--a-400);
+    --color-accent: var(--p-vivid);
+    --color-accent-hover: var(--p-vivid);
+    --color-accent-vivid: var(--p-vivid);
+    --color-accent-surface: var(--p-soft-dark);
+    --color-focus: var(--p-vivid);
 
     color-scheme: dark;
   }

@@ -21,7 +21,10 @@ const intro =
 
 <Base bare>
   <section class="page hero">
-    <h1>{t('home.heroTagline')}</h1>
+    <h1>
+      <span class="lead">{t('home.heroLead')}</span>{' '}
+      <span class="rest">{t('home.heroRest')}</span>
+    </h1>
   </section>
 
   <section class="page work" id="work" aria-labelledby="work-heading">
@@ -46,10 +49,22 @@ const intro =
   }
 
   .hero h1 {
-    max-width: 22ch;
-    font-size: clamp(var(--t-xl), 4.6vw, var(--t-3xl));
-    line-height: var(--lh-snug);
-    font-weight: var(--fw-medium);
+    /* 30ch держит строку в четыре строки на десктопе: при 18ch их становится шесть. */
+    max-width: 30ch;
+    font-size: clamp(var(--t-xl), 5vw, var(--t-4xl));
+    line-height: 1.06;
+    letter-spacing: var(--tracking-display);
+    font-weight: var(--fw-semibold);
+    text-wrap: pretty;
+  }
+
+  /* Роль читается первой, описание уходит на второй план — но остаётся в одном блоке. */
+  .hero .lead {
+    color: var(--color-text);
+  }
+
+  .hero .rest {
+    color: var(--color-text-muted);
   }
 
   .section-heading {

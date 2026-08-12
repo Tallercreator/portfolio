@@ -46,11 +46,17 @@ const hidden = kind === 'todo' && !import.meta.env.DEV;
     margin-block-start: var(--s-3);
   }
 
+  /*
+    Единственное место на сайте, где появляется цвет. «Развилка» — то,
+    что отличает решение от исполнения, поэтому акцент потрачен здесь,
+    а не на кнопки и не на заголовки.
+  */
   .fork {
-    background: transparent;
-    border-inline-start: 2px solid var(--color-accent);
-    border-radius: 0;
-    padding-inline: var(--s-5) 0;
+    background: var(--color-accent-surface);
+    border-inline-start: 3px solid var(--color-accent-vivid);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    padding: var(--s-5) var(--s-5) var(--s-5) var(--s-6);
   }
 
   /* Намеренно уродливо: должно резать глаз, пока текст не дописан. */

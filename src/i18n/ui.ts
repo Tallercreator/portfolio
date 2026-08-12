@@ -18,8 +18,10 @@ export const ui = {
     'nav.skipToContent': 'Перейти к содержанию',
     'nav.langLabel': 'Язык интерфейса',
 
-    'home.heroTagline':
-      'Продуктовый дизайнер. Проектирую внутренние продукты для 7000 сотрудников и довожу их до прода — вместе с логикой, текстами и кодом.',
+    /* Герой набирается в два тона: первая часть чернилами, вторая приглушённо. */
+    'home.heroLead': 'Продуктовый дизайнер.',
+    'home.heroRest':
+      'Проектирую внутренние продукты для 7000 сотрудников и довожу их до прода — вместе с логикой, текстами и кодом.',
     'home.workHeading': 'Кейсы',
     'home.aboutHeading': 'Коротко о себе',
     'home.aboutMore': 'Подробнее — о процессе и о том, что я себе написала',
@@ -59,8 +61,9 @@ export const ui = {
     'nav.skipToContent': 'Skip to content',
     'nav.langLabel': 'Interface language',
 
-    'home.heroTagline':
-      'Product designer. I build internal products for 7,000 employees and take them to production — logic, copy and code included.',
+    'home.heroLead': 'Product designer.',
+    'home.heroRest':
+      'I build internal products for 7,000 employees and take them to production — logic, copy and code included.',
     'home.workHeading': 'Selected work',
     'home.aboutHeading': 'Short version',
     'home.aboutMore': 'More on how I work and what I’ve built myself',
