@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  heading: string;
+}
+
+const { heading } = Astro.props;
+
+/*
+  Картинки подхватываются из папки сами — достаточно положить файл.
+  Порядок по имени, поэтому управлять им можно префиксами: 01-, 02- и так далее.
+*/
+const files = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/gallery/*.{png,jpg,jpeg,webp,avif}',
+  { eager: true }
+);
+
+const images = Object.entries(files)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, mod]) => mod.default);
+---
+
+{
+  /* Пока картинок нет, раздела на странице тоже нет. */
+  images.length > 0 && (
+    <section class="page gallery" aria-labelledby="gallery-heading">
+      <h2 id="gallery-heading">{heading}</h2>
+
+      {/*
+        Раздел намеренно без ссылок: это не кейсы и кликать тут не на что.
+        Картинки декоративные, поэтому alt пустой — скринридер пропустит их,
+        а заголовок раздела уже сказал, что здесь.
+      */}
+      <div class="grid">
+        {images.map((img) => (
+          <Image
+            src={img}
+            alt=""
+            widths={[400, 800, 1200]}
+            sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 45vw, 100vw"
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .gallery {
+    padding-block: var(--s-8);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  h2 {
+    margin-block-end: var(--s-6);
+    font-size: var(--t-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* Колонки, а не сетка: картинки разного формата ложатся без обрезки. */
+  .grid {
+    columns: 2;
+    column-gap: var(--s-4);
+  }
+
+  @media (min-width: 40rem) {
+    .grid {
+      columns: 3;
+      column-gap: var(--s-5);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .grid {
+      columns: 4;
+    }
+  }
+
+  .grid :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-block-end: var(--s-4);
+    border-radius: var(--radius-md);
+    break-inside: avoid;
+  }
+
+  @media (min-width: 40rem) {
+    .grid :global(img) {
+      margin-block-end: var(--s-5);
+    }
+  }
+</style>

@@ -25,6 +25,7 @@ export const ui = {
     'home.workHeading': 'Кейсы',
     'home.aboutHeading': 'Коротко о себе',
     'home.aboutMore': 'Подробнее — о процессе и о том, что я себе написала',
+    'home.galleryHeading': 'Древние картинки мои',
 
     'case.role': 'Роль',
     'case.timeline': 'Срок',
@@ -67,6 +68,7 @@ export const ui = {
     'home.workHeading': 'Selected work',
     'home.aboutHeading': 'Short version',
     'home.aboutMore': 'More on how I work and what I’ve built myself',
+    'home.galleryHeading': 'Ancient pictures of mine',
 
     'case.role': 'Role',
     'case.timeline': 'Timeline',

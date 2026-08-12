@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CaseCard from './CaseCard.astro';
+import Gallery from './Gallery.astro';
 import { getCases } from '../lib/cases';
 import { useTranslations, localizePath } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
@@ -41,6 +42,8 @@ const intro =
       <a href={localizePath('/about', lang)}>{t('home.aboutMore')} →</a>
     </p>
   </section>
+
+  <Gallery heading={t('home.galleryHeading')} />
 </Base>
 
 <style>
