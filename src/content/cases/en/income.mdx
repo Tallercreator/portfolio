@@ -2,7 +2,7 @@
 title: 'Income and benefits'
 order: 3
 outcome: CSI 4.7 / 5 on the first measurement, 412 respondents
-summary: Pay structure, a visual breakdown of salary calculation, and benefits — mobile version included. Live in production.
+summary: 'A transparent salary breakdown with the actual formula, plus health insurance and gym activation inside the employee account — instead of paperwork and Lotus.'
 role: Product designer
 timeline: '[to confirm]'
 team: Platform product team
@@ -15,34 +15,53 @@ import Note from '../../../components/Note.astro';
 
 ## Context and problem
 
-Salary arrives as a single figure but is assembled from many parts: base pay, bonuses, supplements, deductions. People see the total and not how it was reached. Benefits sit separately, and often nobody knows they exist — they are there, but you only find out by asking.
+The module was new — before it there was no transparency at all. Salary arrived as a single figure and nobody could see how it was reached.
 
-<Note kind="todo" label="To finish">
-Where the task came from. What happened before the module: were people going to support or to payroll with questions, was there data on those requests, who first said this couldn't continue. Right now the opening paragraph describes the problem in general rather than yours — this is the most visible gap in the case.
-</Note>
+Bonuses were the worst of it. People didn't know their own percentage, couldn't work out what it came to, and had no idea what it added up to over a year. The questions went into email threads — and every one of them meant somebody was making decisions about their own money blind.
+
+Benefits were a separate story. Health insurance and the gym allowance existed, but activating them meant a paper process in Lotus. Awkward enough that some people simply never finished it.
+
+## Inputs
+
+This was the most complex module I've run. What was needed wasn't a picture with a number on it but a working formula: the components, the order of calculation, and the legal wording without which you can't show people sums at all.
+
+I ran the research separately for web and mobile. Mobile is harder in principle: a formula that reads as one line on a wide screen doesn't fit on a phone.
+
+What the research showed:
+
+- people followed the calculations themselves, but the wording stayed heavy;
+- they asked for the formula laid out horizontally as an alternative view.
+
+Otherwise the launch went quietly.
 
 ## The decision
 
 <Note kind="fork">
-<Note kind="todo" label="To finish">
-What the non-obvious call was here. The options I was choosing between: show the full calculation or reveal it on request, a separate benefits screen or benefits folded into the income structure, how much detail to give up front. One real choice with a reason is enough — the fork is what people read the case for.
-</Note>
+Show the whole calculation, or stop at the final figure with an explanation.
+
+The second is easier in every way: fewer screens, less to agree with legal, no risk of somebody misreading the formula. But then the module doesn't do its job — it leaves the employee with a number again, and no way to check it.
+
+I chose to show everything: the formula, all its components and the legal wording. The price of that choice turned up in the research, below.
 </Note>
 
 ## Solution
 
-Three parts tied together by one logic: pay structure, a visual breakdown of the salary calculation, and benefits. I designed the mobile version from the start rather than adapting it afterwards — people check their pay on a phone more often than at a work computer.
+Three parts tied together by one logic.
+
+**Income structure** — what the payment is made of. **Calculation** — the formula with its components, including the bonus percentage and how it turns into a sum. **Benefits** — health insurance and gym activation, entirely inside the employee account.
+
+I designed the mobile version from the start rather than adapting it later. People check their pay on a phone, and a formula is about the most awkward thing you can ask a small screen to display.
+
+Activation isn't simple in itself — there are several conditions and steps. I broke it into steps and distributed the content so that at each one it's clear what is happening now and what comes next. Paperwork and Lotus left the process entirely.
 
 <Note kind="todo" label="Assets">
-Add, on demo data: the income structure screen, the calculation breakdown, the benefits section, and the mobile version next to the desktop one. Images matter more here than in the other cases: work with numbers is explained by showing it, not describing it.
+Add, on demo data: the income structure, the calculation screen with the formula, the insurance activation steps, and the mobile version next to the desktop one. Images matter more here than in the other cases: work with numbers is explained by showing it, not describing it.
 </Note>
 
 ## Outcome and reflection
 
-The module runs in production. CSI 4.7 / 5 on the first measurement, 412 respondents.
+CSI 4.7 / 5 on the first measurement, 412 respondents. Insurance and gym activation moved into the employee account: no paperwork, no Lotus.
 
-This is the most solid number in the whole portfolio: a sample of 412 isn't a pilot with ten colleagues, it's measurable feedback from a visible share of the people who use the platform.
+I know the weak spot and it's mine: the wording. People understood the calculation but tripped over how it was described in words. That's exactly the part I could have done better as the person who writes the platform's copy — in a module about transparency, unclear wording costs more than anywhere else.
 
-<Note kind="todo" label="To finish">
-Reflection: what the measurement showed, which of the three sections landed worst, what I'd do differently.
-</Note>
+The second thing left open is the request to show the formula horizontally as an alternative view. The research surfaced it; it didn't make the release.
