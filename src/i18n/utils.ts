@@ -26,11 +26,18 @@ export function useTranslations(lang: Lang) {
   };
 }
 
-/** Путь с префиксом локали и базой: localizePath('/about', 'en') → '/portfolio/en/about' */
+/**
+ * Путь с префиксом локали и базой: localizePath('/about', 'en') → '/portfolio/en/about/'
+ *
+ * Слеш на конце не косметика: страницы собираются как каталоги, и без него
+ * хостинг отвечает редиректом на каждую внутреннюю ссылку. Заодно canonical
+ * и hreflang начинают совпадать посимвольно.
+ */
 export function localizePath(path: string, lang: Lang): string {
   const clean = path.startsWith('/') ? path : `/${path}`;
   const localized = lang === defaultLang ? clean : `/${lang}${clean}`;
-  return `${BASE}${localized}` || '/';
+  const full = `${BASE}${localized}`;
+  return full.endsWith('/') ? full : `${full}/`;
 }
 
 /** Тот же URL на другом языке — для переключателя и hreflang. */
