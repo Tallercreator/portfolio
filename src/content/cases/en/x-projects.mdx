@@ -1,0 +1,63 @@
+---
+title: 'X-projects: a goal-setting system'
+order: 3
+outcome: A concept that let the business see the logic before paying to build it
+summary: A goal tree four levels deep, several owners on one goal, participation weights and approval stages. I built a working concept on a tight deadline, for the budget review.
+role: Product designer
+timeline: Tight deadline
+team: Platform product team
+year: '2026'
+tags: ['Complex logic', 'Prototyping in code', 'Goal setting']
+confidential: true
+cover: ../../../assets/cases/x-projects/cover.png
+coverAlt: 'An X-project page: description, definition of done, and goals grouped by quarter'
+---
+
+import Note from '../../../components/Note.astro';
+import Video from '../../../components/Video.astro';
+import goalTree from '../../../assets/cases/x-projects/goal-tree-poster.png';
+
+## Context and problem
+
+We needed a goal system four levels deep: company → quarter → team → employee. Goals break down as you go down, and progress adds back up as you go up.
+
+Three things made it harder. A single goal can have several owners. Each person's contribution is set by its own weight. And a goal moves through approval stages, with different things possible at each one.
+
+Drawing a four-level tree isn't hard. Making it clear where you are in that tree is: someone opens their own goal and can't see what it's part of, and a manager can't tell which level everything stalled at.
+
+## Inputs
+
+The project didn't exist yet. For anyone to start building it, the business had to see the future product and sign off the budget. There wasn't much time to prepare.
+
+## The decision
+
+<Note kind="fork">
+Show the business static mockups, or build a working concept. The first is cheaper and faster, and time was short.
+
+I went with the second. A four-level tree doesn't come across in pictures — you have to handle it: open a branch, watch progress recalculate when a goal has several owners, see what happens moving between approval stages. With static screens all of that is explained by the person standing next to them, not by the product. At a budget review those are two different things.
+</Note>
+
+## Solution
+
+I built a clickable HTML prototype and ran the logic on it: how a goal breaks down, how progress is calculated when there are several owners, what happens on the transitions between approval stages.
+
+The side benefit was worth as much as the main one. The holes in the logic surfaced on the prototype — which is to say, before anyone had paid for that logic.
+
+The prototype covered more than the browsing screens — it included the forms: goal type, unit of measurement, target, participation weight, period, assignee. At a budget review that counts for more than a pretty picture: it shows the system was thought through down to the fields, not down to the cover.
+
+<Video
+  src="/video/x-projects/goal-tree.mp4"
+  poster={goalTree}
+  caption="A realised concept of an X-project created by its owner. The goal card shows type, unit of measurement, target and participation weight. Below it are the related goals, each showing its nesting level and how many children it has. “Add this goal to myself” opens a form where the goal is already tied to the project, an assignee and an owner."
+  mode="controls"
+/>
+
+<Note kind="todo" label="Assets">
+Add: the data model diagram (goal, owners, weights, stages), the approval state diagram, frames from the prototype. Best case, embed the prototype itself — it's the strongest candidate for the one bold element in the portfolio.
+</Note>
+
+## Outcome and reflection
+
+The concept was presented to the business and the development budget was approved.
+
+I didn't take the project forward myself. My load on other modules was high enough that adding one more would have meant doing all of them worse, so I handed it to another designer. There was something to hand over: by that point the prototype and the logic diagrams existed on their own, not only in my head.

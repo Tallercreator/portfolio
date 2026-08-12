@@ -1,0 +1,147 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { localizePath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  entry: CollectionEntry<'cases'>;
+  lang: Lang;
+  slug: string;
+}
+
+const { entry, lang, slug } = Astro.props;
+const { title, summary, outcome, tags, cover, coverAlt, compact } = entry.data;
+const href = localizePath(`/case/${slug}`, lang);
+---
+
+<article class:list={['card', { compact }]}>
+  <a class="hit" href={href}>
+    <span class="visually-hidden">{title}</span>
+  </a>
+
+  {
+    cover ? (
+      <div class="media">
+        <Image
+          src={cover}
+          alt={coverAlt ?? ''}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 60rem) 36rem, 100vw"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    ) : (
+      /* Кейс без единого скриншота тоже должен выглядеть как кейс,
+         а не как сломанная карточка. Вместо картинки — результат крупно. */
+      <div class="media media--text">
+        <p>{outcome}</p>
+      </div>
+    )
+  }
+
+  <div class="body">
+    <h3>{title}</h3>
+    <p class="summary">{summary}</p>
+    {
+      tags.length > 0 && (
+        <ul class="tags">
+          {tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    padding-block-end: var(--s-2);
+  }
+
+  /* Кликабельна вся карточка, но в DOM ссылка одна — так проще для скринридера. */
+  .hit {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius-lg);
+  }
+
+  .card:hover .media {
+    border-color: var(--color-border-strong);
+  }
+
+  .media {
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    aspect-ratio: 3 / 2;
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+
+  .media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .media--text {
+    display: grid;
+    place-items: center;
+    padding: var(--s-6);
+  }
+
+  .media--text p {
+    max-width: 26ch;
+    font-size: var(--t-md);
+    line-height: var(--lh-snug);
+    text-align: center;
+    color: var(--color-text-secondary);
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-size: var(--t-lg);
+  }
+
+  .summary {
+    margin-block-start: var(--s-2);
+    max-width: 46ch;
+    color: var(--color-text-secondary);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin-block-start: var(--s-3);
+    padding: 0;
+    list-style: none;
+    font-size: var(--t-xs);
+    color: var(--color-text-muted);
+  }
+
+  .tags li::after {
+    content: '·';
+    margin-inline-start: var(--s-2);
+  }
+
+  .tags li:last-child::after {
+    content: none;
+  }
+
+  .compact .media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .compact h3 {
+    font-size: var(--t-md);
+  }
+</style>

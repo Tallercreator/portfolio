@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  /** Пустая строка — если картинка чисто декоративная и всё сказано в подписи. */
+  alt: string;
+  /** Подпись обязательна по смыслу: она говорит, куда смотреть. */
+  caption?: string;
+  width?: 'text' | 'wide' | 'full';
+  /** Рамка нужна светлым макетам, чтобы они не сливались с фоном. */
+  frame?: boolean;
+}
+
+const { src, alt, caption, width = 'wide', frame = true } = Astro.props;
+---
+
+<figure class:list={['figure', `w-${width}`]}>
+  <div class:list={['media', { frame }]}>
+    <Image
+      src={src}
+      alt={alt}
+      widths={[640, 1024, 1600]}
+      sizes={width === 'text' ? '(min-width: 60rem) 40rem, 100vw' : '(min-width: 76rem) 72rem, 100vw'}
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    margin-block: var(--s-7);
+  }
+
+  .media.frame {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+  }
+
+  figcaption {
+    margin-block-start: var(--s-3);
+    max-width: var(--measure);
+    font-size: var(--t-sm);
+    line-height: var(--lh-normal);
+    color: var(--color-text-muted);
+  }
+
+  .w-text {
+    max-width: var(--measure);
+  }
+
+  /* Выход за колонку текста — только у широких изображений. */
+  .w-wide,
+  .w-full {
+    width: 100%;
+  }
+
+  @media (min-width: 64rem) {
+    .w-wide {
+      /* Ширина колонки текста + запас в обе стороны, но не во всю страницу. */
+      width: min(100%, 56rem);
+    }
+  }
+</style>

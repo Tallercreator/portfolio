@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import CaseCard from './CaseCard.astro';
+import { getCases } from '../lib/cases';
+import { useTranslations, localizePath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const cases = await getCases(lang);
+
+const intro =
+  lang === 'ru'
+    ? 'Продуктовый дизайнер, в профессии четыре с половиной года. Последние два — во внутренних продуктах ОТП Банка: HR-платформа, которой пользуются 7000 сотрудников. Веду модули от гипотезы до прода, включая логику, тексты и передачу в разработку. Код и ИИ использую как рабочие инструменты.'
+    : 'Product designer, four and a half years in. The last two on internal products at OTP Bank — an HR platform used by 7,000 people. I run modules from hypothesis to production, including the logic, the copy and the handoff to engineering. Code and AI are part of how I work.';
+---
+
+<Base bare>
+  <section class="page hero">
+    <h1>{t('home.heroTagline')}</h1>
+  </section>
+
+  <section class="page work" id="work" aria-labelledby="work-heading">
+    <h2 id="work-heading" class="section-heading">{t('home.workHeading')}</h2>
+    <div class="grid">
+      {cases.map((item) => <CaseCard entry={item.entry} lang={lang} slug={item.slug} />)}
+    </div>
+  </section>
+
+  <section class="page about" aria-labelledby="about-heading">
+    <h2 id="about-heading" class="section-heading">{t('home.aboutHeading')}</h2>
+    <p class="intro">{intro}</p>
+    <p class="more">
+      <a href={localizePath('/about', lang)}>{t('home.aboutMore')} →</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(var(--s-8), 12vh, var(--s-10)) var(--s-9);
+  }
+
+  .hero h1 {
+    max-width: 22ch;
+    font-size: clamp(var(--t-xl), 4.6vw, var(--t-3xl));
+    line-height: var(--lh-snug);
+    font-weight: var(--fw-medium);
+  }
+
+  .section-heading {
+    margin-block-end: var(--s-6);
+    font-size: var(--t-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .work {
+    padding-block-end: var(--s-9);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--s-8) var(--s-6);
+  }
+
+  @media (min-width: 52rem) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Первый кейс — дизайн-система — занимает всю ширину:
+       он задаёт рамку чтения всего остального. */
+    .grid > :global(:first-child) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .about {
+    padding-block: var(--s-8);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .intro {
+    max-width: var(--measure);
+  }
+
+  .more {
+    margin-block-start: var(--s-4);
+    font-size: var(--t-sm);
+  }
+</style>

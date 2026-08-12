@@ -1,0 +1,67 @@
+---
+interface Props {
+  /**
+   * fork — блок «Развилка», главный смысловой акцент кейса
+   * todo — заглушка для незаполненного контента, в прод не должна попадать
+   */
+  kind?: 'default' | 'fork' | 'todo';
+  label?: string;
+}
+
+const { kind = 'default', label } = Astro.props;
+
+/*
+  Заглушки видны только в `npm run dev`. В прод они не попадают физически —
+  не вырезаются стилями, а просто не рендерятся. Забыть убрать их нельзя.
+*/
+const hidden = kind === 'todo' && !import.meta.env.DEV;
+---
+
+{!hidden && (
+<aside class:list={['note', kind]}>
+  {label && <p class="label">{label}</p>}
+  <div class="body"><slot /></div>
+</aside>
+)}
+
+<style>
+  .note {
+    margin-block: var(--s-6);
+    max-width: var(--measure);
+    padding: var(--s-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-subtle);
+  }
+
+  .label {
+    margin-block-end: var(--s-2);
+    font-size: var(--t-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .body > :global(* + *) {
+    margin-block-start: var(--s-3);
+  }
+
+  .fork {
+    background: transparent;
+    border-inline-start: 2px solid var(--color-accent);
+    border-radius: 0;
+    padding-inline: var(--s-5) 0;
+  }
+
+  /* Намеренно уродливо: должно резать глаз, пока текст не дописан. */
+  .todo {
+    background: repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-accent) 8%, transparent),
+      color-mix(in srgb, var(--color-accent) 8%, transparent) 10px,
+      transparent 10px,
+      transparent 20px
+    );
+    border: 1px dashed var(--color-accent);
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import '../styles/base.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations, switchLangPath } from '../i18n/utils';
+import { languages } from '../i18n/ui';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Скрыть заголовок сайта в шапке — на главной он уже есть в герое. */
+  bare?: boolean;
+}
+
+const { title, description, bare = false } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pageTitle = title ? `${title} — ${t('site.title')}` : t('site.title');
+const pageDescription = description ?? t('site.description');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+
+    {
+      (Object.keys(languages) as Array<keyof typeof languages>).map((code) => (
+        <link
+          rel="alternate"
+          hreflang={code}
+          href={new URL(switchLangPath(Astro.url, code), Astro.site)}
+        />
+      ))
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="icon"
+      href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`}
+      type="image/svg+xml"
+    />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{t('nav.skipToContent')}</a>
+    <Header bare={bare} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    display: block;
+    padding-block-end: var(--s-9);
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+title: A design system written in code
+order: 1
+outcome: 45 components in production in a few days, instead of a quarter spent waiting in the resource queue
+summary: We inherited a component library that was never finished and had drifted from the mockups. I built the system directly in code rather than waiting for engineering time.
+role: Product designer
+timeline: A few days
+team: Me and one engineer
+year: '2026'
+tags: ['Design system', 'Claude Code', 'Governance']
+confidential: true
+compact: false
+---
+
+import Note from '../../../components/Note.astro';
+
+## Context and problem
+
+We inherited the component library. It was never finished, and over time it drifted away from the mockups — some components lived only in Figma, some only in code, and the two behaved differently. Engineering couldn't build on it, so every new screen was put together by hand.
+
+Nobody disagreed that the library needed rewriting. But no time was ever allocated for it, and the task sat in the backlog for a couple of years. It was a closed loop: without the library every screen costs more, and because screens cost more, there's no time for the library.
+
+## Inputs
+
+The constraint wasn't a design one. Any option that needed a quarter of engineering time got rejected on the spot, so whatever I did had to fit into days and work without a dedicated team.
+
+## The decision
+
+<Note kind="fork">
+There were three options.
+
+**Wait for engineering time.** The correct answer on paper, but with no date attached — the task had already gone nowhere for years.
+
+**Build another library in Figma.** I could do that myself, quickly. It just doesn't fix anything: the mockups and the code drift apart again, only slightly later.
+
+**Build the system directly in code.** That's what I picked. What decided it was where the truth would live. If it lives in Figma, code is always chasing it, and in six months we're back where we started.
+</Note>
+
+## Solution
+
+Here's how it worked. I handed Claude Code the Figma files and answered its questions as they came up: how a component should stretch, what to do with edge states, which variant counts as the default.
+
+The side effect turned out to be more useful than I expected. The questions landed precisely where nobody had looked before, and they exposed defects in the library itself. The same state on components of the same size was using different tokens. In places values were hardcoded where a token belonged. The guide still described things the system no longer contained. Some of it I sent back to the design system team, some I went in and fixed myself rather than wait.
+
+I reviewed the finished components and pushed them to git. From there an engineer took over: read the code, fixed what needed fixing, and we shipped. I didn't write the production code — what was mine were the design decisions, the structure of the system and the state everything was in when it reached the repository.
+
+Separately I wrote an agent on the Claude Agent SDK that opens Figma files and flags anything that deviates from the tokens. Before that the check was manual and, honestly, didn't always happen.
+
+<Note kind="todo" label="Assets">
+Add: the token structure, one component shown both ways — code and mockup — and a screenshot of the agent's report. All on demo data.
+</Note>
+
+## Outcome and reflection
+
+45 components in production. Two platform modules are being built on the library right now.
+
+What I'd do differently is agree on an owner up front. The symptom was visible during the work itself: I was going in and fixing other people's components because waiting took longer than doing it. That holds up right until the number of fixes stops being small.
+
+The rules came afterwards: who accepts new components, how they get versioned, who keeps them up to date. That cost us a few awkward conversations that wouldn't have happened if we'd sorted it out before the first commit.

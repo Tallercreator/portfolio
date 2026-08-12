@@ -1,0 +1,49 @@
+---
+title: DSHub
+order: 5
+outcome: 20+ in-depth interviews, 9 system teardowns, a 121-term glossary — all of it shipped as a working product
+summary: An online publication about design systems in Russian digital products. The only case I took all the way through on my own, from framing the problem to the defence.
+role: Sole author — research, product, development
+timeline: Graduation project, HSE University
+team: Solo
+year: '2026'
+tags: ['Research', 'Astro + React', 'Token system']
+---
+
+import Note from '../../../components/Note.astro';
+
+## Context and problem
+
+People talk about design systems in Russian products constantly, but almost nothing is written down in one place. Teams work through the same questions — governance, versioning, how to connect design and code — in parallel and in isolation. The experience is scattered across talks, threads and internal wikis, and there's no way to find it together.
+
+## Inputs
+
+20+ in-depth interviews with practitioners from Dodo Pizza, Sberbank, Alfa-Bank, Avito, MTS Fintech and OTP Bank.
+
+The structure of the product came out of those interviews too. The themes that came up with everyone became the sections. And the fact that teams call the same things by different names showed that the glossary needed to be its own part, not an appendix at the end.
+
+## The decision
+
+<Note kind="fork">
+I could have closed the thesis with the research text alone. That's cheaper and a perfectly normal format.
+
+I decided to take it to a working product instead. A piece of work about design systems, put together without a token system of its own, would have looked strange — here the product is part of the argument.
+</Note>
+
+## Solution
+
+An online publication: 9 teardowns of public design systems, a 121-term glossary, 35 resource cards. It lives at [dshub.tech](https://dshub.tech).
+
+Built with Astro and React on a token system of my own. Two layers of tokens, with components only ever referencing the semantic layer, so dark mode comes from changing values rather than rewriting components.
+
+<Note kind="todo" label="Assets">
+Add: a link to the live site, a teardown spread, the glossary screen, a slice of the token system. Nothing restricts screenshots here — the case is public, which is worth using.
+</Note>
+
+## Outcome and reflection
+
+The only case where I went the whole way alone: framing the problem, research, systematisation, product, defence.
+
+The hardest part wasn't the interviews, it was getting people to agree to them. The people actually building design systems are busy, and a request from a student doesn't get answered quickly, or at all. Twenty conversations that happened means considerably more than twenty messages sent.
+
+What worked was the simplest thing available: messaging people directly, no formal requests and no intermediaries. It's slow, but you get a reply from a person rather than from a press office.

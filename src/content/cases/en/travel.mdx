@@ -1,0 +1,63 @@
+---
+title: 'Business travel: from paper to product'
+order: 2
+outcome: A process that lived in email and on paper now runs in production
+summary: 'Travel requests, approvals and policy lived in email and on paper. I designed the module end to end, from the request form to the expense report.'
+role: Product designer
+timeline: 2 months of research and design, 3 months of development
+team: Platform product team
+year: '2025 – 2026'
+tags: ['Process digitisation', 'Usability testing', 'Approval flows']
+confidential: true
+---
+
+import Note from '../../../components/Note.astro';
+
+## Context and problem
+
+There was no digital process at all. People wrote travel requests in email, approvals moved by email too, and the travel policy sat in a separate document almost nobody opened.
+
+You'd send a request and then know nothing: whose desk it was on, how long to wait, whether it had arrived. Approvers lost documents — the email slid down a thread, the paper went into a pile. Reconstructing who approved what, and when, was impossible.
+
+## Inputs
+
+What I had to work around:
+
+- the bank's travel policy — it can't be simplified, only surfaced at the moment it's needed;
+- the approver roles and the order they come in;
+- integration with HR systems that were already running.
+
+I ran usability testing before handoff, so the fixes went into the mockups rather than into shipped code. More than 80 people took part and we ran every scenario end to end: creating a request, changing it, cancelling it, booking travel and accommodation, filing the expense report.
+
+What came out of it:
+
+- more than a quarter of participants didn't register the wording on screen — the text was there, people looked straight past it;
+- the weekend-work notification got mistaken for the formal order: two documents that mean different things looked the same;
+- some people couldn't tell whether the trip was finished once the expense report was filed, or whether something else was still coming;
+- almost nobody knew what they were allowed to attach to an expense report.
+
+All of it was fixed before development started.
+
+## The decision
+
+<Note kind="fork">
+The main question was what to keep from the paper process and what to rebuild.
+
+I kept the approval route close to what it was. It mirrors how the bank is set up: who is accountable for whom, who signs off on spending. Rebuilding it means arguing with the structure of the company rather than with an interface — lots of resistance, little to gain.
+
+Everything else I redesigned: the request itself, the statuses, and how the travel policy shows up. That's where people got lost, and it's where a digital process gives you what paper can't — a clear status at any point and a history that can't go missing.
+</Note>
+
+## Solution
+
+<Note kind="todo" label="Assets">
+Add: the before/after journey map, the request status model, key screens on demo data. The case has to work with no screenshots at all if they aren't cleared — the diagrams are the mandatory part, the screens are a bonus.
+</Note>
+
+## Outcome and reflection
+
+The module runs in production.
+
+There's one place people still trip up: how long the whole thing takes. The steps run strictly in sequence — arrangements first, then the trip, then the reporting — and the next step doesn't open until the previous one is closed. That's how the process itself is built rather than the interface, and design only fixes part of it.
+
+The expense report moment, where people couldn't tell whether the trip was over, we solved with emotional design: at the end you get a note wishing you good trips ahead, with a heart. A line of copy in the right place turned out to work better than another status.

@@ -1,0 +1,132 @@
+/*
+  Токены. Два слоя:
+  1) примитивы — сырые значения, ни к чему не привязаны
+  2) семантика — что этим значением называется в интерфейсе
+
+  Компоненты обращаются ТОЛЬКО к семантическому слою.
+  Смена стилистики по референсам = правка этого файла, не компонентов.
+*/
+
+:root {
+  /* ---------- 1. Примитивы ---------- */
+
+  /* Нейтральная шкала. Слегка холодная, чтобы не читалась как «кремовый ИИ-дефолт». */
+  --n-0: #ffffff;
+  --n-50: #f7f8f8;
+  --n-100: #eef0f1;
+  --n-200: #dfe2e4;
+  --n-300: #c4c9cd;
+  --n-400: #9aa1a7;
+  --n-500: #6f777e;
+  --n-600: #515860;
+  --n-700: #383e44;
+  --n-800: #23282d;
+  --n-900: #14181b;
+
+  /* Акцент — ПЛЕЙСХОЛДЕР. Ждёт референсов.
+     Требование: контраст с --n-0 не ниже 4.5:1 для текста. */
+  --a-400: #4b7fd6;
+  --a-500: #2f5fb3;
+  --a-600: #234a8c;
+
+  /* Типографика: модульная шкала, шаг 1.2, база 17px.
+     Значения зафиксированы в rem, не считаются в рантайме — так они предсказуемы. */
+  --t-xs: 0.75rem; /* 12 */
+  --t-sm: 0.875rem; /* 14 */
+  --t-base: 1.0625rem; /* 17 */
+  --t-md: 1.25rem; /* 20 */
+  --t-lg: 1.5rem; /* 24 */
+  --t-xl: 1.875rem; /* 30 */
+  --t-2xl: 2.25rem; /* 36 */
+  --t-3xl: 3rem; /* 48 */
+  --t-4xl: 3.75rem; /* 60 */
+
+  --lh-tight: 1.1;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.65;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+
+  /* Шаг сетки 4px. Ни одного отступа мимо шкалы. */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* ---------- 2. Семантика ---------- */
+
+  --color-bg: var(--n-0);
+  --color-bg-subtle: var(--n-50);
+  --color-bg-sunken: var(--n-100);
+
+  --color-text: var(--n-900);
+  --color-text-secondary: var(--n-600);
+  --color-text-muted: var(--n-500);
+  --color-text-inverse: var(--n-0);
+
+  --color-border: var(--n-200);
+  --color-border-strong: var(--n-300);
+
+  --color-accent: var(--a-500);
+  --color-accent-hover: var(--a-600);
+  --color-focus: var(--a-400);
+
+  /* Сетка страницы */
+  --measure: 68ch; /* комфортная длина строки для текста кейса */
+  --page-max: 76rem;
+  --page-gutter: var(--s-4);
+
+  color-scheme: light;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --page-gutter: var(--s-6);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: var(--n-900);
+    --color-bg-subtle: var(--n-800);
+    --color-bg-sunken: var(--n-700);
+
+    --color-text: var(--n-50);
+    --color-text-secondary: var(--n-300);
+    --color-text-muted: var(--n-400);
+    --color-text-inverse: var(--n-900);
+
+    --color-border: var(--n-700);
+    --color-border-strong: var(--n-600);
+
+    --color-accent: var(--a-400);
+    --color-accent-hover: var(--a-400);
+    --color-focus: var(--a-400);
+
+    color-scheme: dark;
+  }
+}

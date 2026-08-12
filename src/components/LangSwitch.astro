@@ -1,0 +1,50 @@
+---
+import { languages, type Lang } from '../i18n/ui';
+import { getLangFromUrl, useTranslations, switchLangPath } from '../i18n/utils';
+
+const current = getLangFromUrl(Astro.url);
+const t = useTranslations(current);
+const codes = Object.keys(languages) as Lang[];
+---
+
+<div class="lang" role="group" aria-label={t('nav.langLabel')}>
+  {
+    codes.map((code) =>
+      code === current ? (
+        <span class="item current" aria-current="true" lang={code}>
+          {languages[code]}
+        </span>
+      ) : (
+        <a class="item" href={switchLangPath(Astro.url, code)} lang={code} hreflang={code}>
+          {languages[code]}
+        </a>
+      )
+    )
+  }
+</div>
+
+<style>
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    font-size: var(--t-xs);
+  }
+
+  .item {
+    padding: var(--s-1) var(--s-2);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--color-text-muted);
+  }
+
+  .item:hover {
+    color: var(--color-text);
+    background: var(--color-bg-sunken);
+  }
+
+  .current {
+    color: var(--color-text);
+    background: var(--color-bg-sunken);
+  }
+</style>

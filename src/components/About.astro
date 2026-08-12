@@ -1,0 +1,507 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import { useTranslations, localizePath } from '../i18n/utils';
+
+const hasCv = existsSync(new URL('../../public/cv.pdf', import.meta.url));
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const ru = lang === 'ru';
+
+const bio = ru
+  ? [
+      'Продуктовый дизайнер, в профессии четыре с половиной года, последние два — во внутренних enterprise-продуктах. В ОТП Банке веду модули HR-платформы для 7000 сотрудников: придумываю гипотезы, проверяю их на интервью и UX-тестах, отвечаю за логику, интерфейс и за то, в каком виде всё это уходит в разработку.',
+      'Код и ИИ для меня рабочие инструменты, а не отдельное увлечение. Дизайн-систему перенесла в код через Claude Code, когда стало понятно, что выделенной разработки на это не дадут. Агента для сверки макетов с системой написала на Python, потому что делать это руками надоело.',
+      'В магистратуру иду за количественной частью: аналитика, юнит-экономика, управление разработкой. Хочу отвечать за продукт целиком, а не только за его дизайнерский слой.',
+    ]
+  : [
+      'Product designer, four and a half years in, the last two spent on internal enterprise products. At OTP Bank I run HR platform modules for 7,000 employees: I come up with the hypotheses, test them in interviews and usability sessions, and own the logic, the interface and the shape it all reaches engineering in.',
+      'Code and AI are working tools for me, not a side hobby. I moved our design system into code with Claude Code once it was clear no engineering time was coming. I wrote the agent that checks Figma files against the system in Python, because doing that by hand got old.',
+      'I am going for a master’s to pick up the quantitative half: analytics, unit economics, engineering management. I want to be responsible for a product as a whole, not just its design layer.',
+    ];
+
+const process = ru
+  ? [
+      {
+        title: 'Сначала разбираюсь, что ломается',
+        body: 'Задача обычно приходит в виде «нужен экран заявки». О том, что сейчас не работает, это не говорит ничего. Поэтому сначала ищу место, где процесс теряет человека: непонятный статус, потерянный документ, зависшее согласование.',
+      },
+      {
+        title: 'Проверяю логику до макетов',
+        body: 'Сложные модули собираю кликабельным прототипом и прогоняю на нём сценарии. Дыра в логике, найденная на прототипе, стоит день работы. Она же, найденная в спринте, стоит неделю.',
+      },
+      {
+        title: 'Показываю, из чего выбирала',
+        body: 'В каждом кейсе оставляю варианты, которые рассматривала, и причину, по которой выбрала один. Без отвергнутых вариантов решение выглядит случайным, даже если оно верное.',
+      },
+      {
+        title: 'Довожу до прода',
+        body: 'Отвечаю за макет, тексты, состояния, передачу в разработку и за то, что в итоге увидели люди. UX-копирайтинг платформы тоже на мне.',
+      },
+    ]
+  : [
+      {
+        title: 'Work out what is actually broken',
+        body: 'A task usually arrives as “we need a request screen”. That tells you nothing about what isn’t working. So I start by finding the place where the process loses the person: an unclear status, a lost document, an approval that stalled.',
+      },
+      {
+        title: 'Test the logic before the visuals',
+        body: 'I build complex modules as clickable prototypes and run the scenarios there. A hole in the logic found on a prototype costs a day. The same hole found mid-sprint costs a week.',
+      },
+      {
+        title: 'Show what I chose between',
+        body: 'Every case keeps the options I considered and the reason I picked one. Without the rejected options a decision looks accidental, even when it was right.',
+      },
+      {
+        title: 'See it through to production',
+        body: 'I own the mockup, the copy, the states, the handoff and what people finally get to use. UX writing for the platform is mine too.',
+      },
+    ];
+
+const tools = ru
+  ? [
+      {
+        title: 'AI-агент дизайн-ревью',
+        stack: 'Claude Agent SDK · Python · Figma MCP',
+        body: 'Открывает макеты в Figma и сверяет их с дизайн-системой: отступы, токены, компоненты. Написала после того, как заметила, что руками делаю эту сверку через раз.',
+      },
+      {
+        title: 'Кликабельные прототипы кодом',
+        stack: 'HTML · CSS · JavaScript',
+        body: 'Деревья целей, статусные модели, маршруты согласования собираю в работающий прототип и прогоняю сценарии до передачи в разработку.',
+      },
+      {
+        title: 'HodlPass',
+        stack: 'Python · aiogram 3',
+        body: 'Сервис для монетизации Telegram-подписок с оплатой в крипте.',
+      },
+      {
+        title: 'Clientsy',
+        stack: 'Python · aiogram 3',
+        body: 'Запись к частным мастерам через мессенджеры.',
+      },
+    ]
+  : [
+      {
+        title: 'Design review AI agent',
+        stack: 'Claude Agent SDK · Python · Figma MCP',
+        body: 'Opens Figma files and checks them against the design system: spacing, tokens, components. I wrote it after noticing I was only doing that check about half the time by hand.',
+      },
+      {
+        title: 'Clickable prototypes in code',
+        stack: 'HTML · CSS · JavaScript',
+        body: 'Goal trees, state models, approval routes — I build them into a working prototype and run the scenarios before handoff.',
+      },
+      {
+        title: 'HodlPass',
+        stack: 'Python · aiogram 3',
+        body: 'A service for monetising Telegram subscriptions, paid in crypto.',
+      },
+      {
+        title: 'Clientsy',
+        stack: 'Python · aiogram 3',
+        body: 'Booking for independent professionals, run through messengers.',
+      },
+    ];
+
+const skills = ru
+  ? [
+      {
+        group: 'Продукт и метрики',
+        items:
+          'продуктовые гипотезы, юнит-экономика и метрики (CAC, LTV, CR, CSI, ROI), приоритизация, работа с требованиями, JTBD, CJM, User Flow',
+      },
+      {
+        group: 'Исследования',
+        items:
+          'глубинные и проблемные интервью, CustDev, юзабилити-тестирование, A/B-тесты, опросы, конкурентный анализ',
+      },
+      {
+        group: 'Проектирование',
+        items:
+          'сквозные пользовательские сценарии, информационная архитектура, адаптивы, UX-копирайтинг, гайдлайны iOS и Android',
+      },
+      {
+        group: 'Дизайн-системы',
+        items: 'токены, компоненты, документация, governance, перенос системы в код, handoff в разработку',
+      },
+      {
+        group: 'ИИ и технические навыки',
+        items:
+          'Claude Code, Figma MCP, Claude Agent SDK, Python, HTML, CSS, JavaScript, прототипирование кодом, Figma, Adobe',
+      },
+      {
+        group: 'Работа в команде',
+        items:
+          'Agile / Scrum, кросс-функциональные команды, постановка задач разработке, защита решений перед стейкхолдерами и b2b-клиентами',
+      },
+    ]
+  : [
+      {
+        group: 'Product and metrics',
+        items:
+          'product hypotheses, unit economics and metrics (CAC, LTV, CR, CSI, ROI), prioritisation, requirements, JTBD, CJM, user flows',
+      },
+      {
+        group: 'Research',
+        items:
+          'in-depth and problem interviews, CustDev, usability testing, A/B tests, surveys, competitive analysis',
+      },
+      {
+        group: 'Design',
+        items:
+          'end-to-end user scenarios, information architecture, responsive design, UX writing, iOS and Android guidelines',
+      },
+      {
+        group: 'Design systems',
+        items: 'tokens, components, documentation, governance, moving a system into code, engineering handoff',
+      },
+      {
+        group: 'AI and technical',
+        items:
+          'Claude Code, Figma MCP, Claude Agent SDK, Python, HTML, CSS, JavaScript, prototyping in code, Figma, Adobe',
+      },
+      {
+        group: 'Teamwork',
+        items:
+          'Agile / Scrum, cross-functional teams, briefing engineers, defending decisions to stakeholders and b2b clients',
+      },
+    ];
+
+/* Годы до ОТП. Не кейсы, но без них портфолио показывает два года из четырёх с половиной. */
+const experience = ru
+  ? [
+      {
+        place: 'idaproject',
+        field: 'PropTech · b2b',
+        period: 'Ноябрь 2024 — Октябрь 2025',
+        body: 'Продуктовый дизайнер. Личные кабинеты под три аудитории на одной системе компонентов, дизайн-система с нуля, защита решений перед b2b-клиентами.',
+        href: localizePath('/case/idaproject', lang),
+        hrefLabel: 'Кейс',
+      },
+      {
+        place: 'it-maestro',
+        field: 'EdTech · b2c и b2b',
+        period: 'Июль 2022 — Ноябрь 2024',
+        body: 'Продуктовый дизайнер и контент-лид. CustDev-интервью, A/B-тесты, запуск MVP. Редизайн лендинга поднял конверсию примерно на 18%. Телеграм-рубрику «Уроки» довела до 1000+ подписчиков при CAC меньше 300 ₽. Из десяти с лишним проектов помню лучше всего Fit Babbie — мобильное приложение, которое вела от CJM до UI.',
+      },
+      {
+        place: 'Проектная работа',
+        field: 'Больше 15 проектов',
+        period: 'Декабрь 2021 — Сентябрь 2022',
+        body: 'Сайты и приложения под iOS и Android. Для агентства недвижимости сделала фирменный стиль и сайт — конверсия в лид выросла примерно на 40%.',
+      },
+    ]
+  : [
+      {
+        place: 'idaproject',
+        field: 'PropTech · b2b',
+        period: 'November 2024 — October 2025',
+        body: 'Product designer. Dashboards for three audiences on one component system, a design system built from scratch, decisions defended in front of b2b clients.',
+        href: localizePath('/case/idaproject', lang),
+        hrefLabel: 'Case',
+      },
+      {
+        place: 'it-maestro',
+        field: 'EdTech · b2c and b2b',
+        period: 'July 2022 — November 2024',
+        body: 'Product designer and content lead. CustDev interviews, A/B tests, MVP launches. A landing page redesign lifted conversion by roughly 18%. I grew the “Lessons” Telegram series past 1,000 subscribers at a CAC under 300 ₽. Of the ten-odd projects, the one I remember best is Fit Babbie, a mobile app I took from CJM to UI.',
+      },
+      {
+        place: 'Freelance and project work',
+        field: '15+ projects',
+        period: 'December 2021 — September 2022',
+        body: 'Websites and apps for iOS and Android. For a real estate agency I did the identity and the site — lead conversion went up by around 40%.',
+      },
+    ];
+
+const education = ru
+  ? [
+      { line: 'НИУ ВШЭ — «Дизайн и программирование», бакалавриат', meta: '2022 – 2026' },
+      { line: 'FormFactor — «Продукт, исследования и метрики»', meta: '2025' },
+    ]
+  : [
+      { line: 'HSE University — Design and Programming, BA', meta: '2022 – 2026' },
+      { line: 'FormFactor — Product, Research and Metrics', meta: '2025' },
+    ];
+---
+
+<Base title={t('about.heading')}>
+  <div class="page about">
+    <header class="head">
+      <h1>{t('about.heading')}</h1>
+      <div class="bio">
+        {bio.map((p) => <p>{p}</p>)}
+      </div>
+    </header>
+
+    <section aria-labelledby="process">
+      <h2 id="process">{t('about.processHeading')}</h2>
+      <ol class="list">
+        {
+          process.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section aria-labelledby="tools">
+      <h2 id="tools">{t('about.toolsHeading')}</h2>
+      <p class="lede">
+        {
+          ru
+            ? 'Это не кейсы. Просто если для задачи нет подходящего инструмента, я обычно сажусь и делаю его.'
+            : 'These aren’t case studies. It’s just that when there’s no good tool for a job, I usually sit down and build one.'
+        }
+      </p>
+      <ul class="list">
+        {
+          tools.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p class="stack">{item.stack}</p>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="skills">
+      <h2 id="skills">{t('about.skillsHeading')}</h2>
+      <dl class="skills">
+        {
+          skills.map((row) => (
+            <div>
+              <dt>{row.group}</dt>
+              <dd>{row.items}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section aria-labelledby="experience">
+      <h2 id="experience">{ru ? 'Где работала до ОТП' : 'Before OTP Bank'}</h2>
+      <ol class="experience">
+        {
+          experience.map((job) => (
+            <li>
+              <div class="job-head">
+                <h3>{job.place}</h3>
+                <p class="job-field">{job.field}</p>
+                <p class="job-period">{job.period}</p>
+              </div>
+              <div class="job-body">
+                <p>{job.body}</p>
+                {job.href && (
+                  <p class="job-link">
+                    <a href={job.href}>{job.hrefLabel} →</a>
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section aria-labelledby="education">
+      <h2 id="education">{ru ? 'Образование' : 'Education'}</h2>
+      <ul class="plain">
+        {
+          education.map((row) => (
+            <li>
+              <span>{row.line}</span>
+              <span class="meta">{row.meta}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="contact">
+      <h2 id="contact">{t('about.contactHeading')}</h2>
+      <ul class="plain">
+        <li><a href="mailto:tallerthecreator@mail.ru">tallerthecreator@mail.ru</a></li>
+        <li><a href="https://t.me/talleeerrr" rel="me noopener">t.me/talleeerrr</a></li>
+        {hasCv && (
+          <li>
+            <a href="/cv.pdf" download>
+              {t('nav.cv')}
+            </a>
+          </li>
+        )}
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .about {
+    padding-block-start: var(--s-8);
+  }
+
+  .head {
+    padding-block-end: var(--s-8);
+  }
+
+  h1 {
+    font-size: clamp(var(--t-2xl), 5vw, var(--t-3xl));
+  }
+
+  .bio {
+    margin-block-start: var(--s-6);
+    max-width: var(--measure);
+  }
+
+  .bio > p + p {
+    margin-block-start: var(--s-4);
+  }
+
+  section {
+    padding-block: var(--s-7);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  section h2 {
+    font-size: var(--t-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .lede {
+    margin-block-start: var(--s-5);
+    max-width: var(--measure);
+    color: var(--color-text-secondary);
+  }
+
+  .list {
+    display: grid;
+    gap: var(--s-6);
+    margin-block-start: var(--s-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 52rem) {
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--s-7) var(--s-6);
+    }
+  }
+
+  .list h3 {
+    font-size: var(--t-md);
+  }
+
+  .list p {
+    margin-block-start: var(--s-2);
+    max-width: 52ch;
+    color: var(--color-text-secondary);
+  }
+
+  .stack {
+    font-family: var(--font-mono);
+    font-size: var(--t-xs);
+    color: var(--color-text-muted);
+  }
+
+  .skills {
+    display: grid;
+    gap: var(--s-5);
+    margin-block-start: var(--s-6);
+  }
+
+  @media (min-width: 52rem) {
+    .skills > div {
+      display: grid;
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--s-5);
+    }
+  }
+
+  .skills dt {
+    font-weight: var(--fw-medium);
+  }
+
+  .skills dd {
+    margin: 0;
+    max-width: var(--measure);
+    color: var(--color-text-secondary);
+  }
+
+  .experience {
+    display: grid;
+    gap: var(--s-6);
+    margin-block-start: var(--s-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .experience li {
+    display: grid;
+    gap: var(--s-3);
+  }
+
+  @media (min-width: 52rem) {
+    .experience li {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--s-5);
+    }
+  }
+
+  .job-head h3 {
+    font-size: var(--t-md);
+  }
+
+  .job-field,
+  .job-period {
+    margin-block-start: var(--s-1);
+    font-size: var(--t-xs);
+    color: var(--color-text-muted);
+  }
+
+  .job-body p {
+    max-width: var(--measure);
+    color: var(--color-text-secondary);
+  }
+
+  .job-link {
+    margin-block-start: var(--s-2);
+    font-size: var(--t-sm);
+  }
+
+  .plain {
+    margin-block-start: var(--s-5);
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--s-3);
+  }
+
+  .plain li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-4);
+    justify-content: space-between;
+    max-width: var(--measure);
+  }
+
+  .plain .meta {
+    color: var(--color-text-muted);
+    font-size: var(--t-sm);
+  }
+</style>

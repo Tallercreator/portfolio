@@ -1,0 +1,49 @@
+---
+interface Props {
+  /** Сколько колонок на десктопе. На мобильном всегда одна. */
+  columns?: 2 | 3;
+  caption?: string;
+}
+
+const { columns = 2, caption } = Astro.props;
+---
+
+<figure class="grid-figure" style={`--cols: ${columns}`}>
+  <div class="grid">
+    <slot />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .grid-figure {
+    margin-block: var(--s-7);
+    width: 100%;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  @media (min-width: 48rem) {
+    .grid {
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    }
+  }
+
+  /* Вложенные Figure уже не отбивают вертикальные отступы — их держит сетка. */
+  .grid :global(.figure) {
+    margin-block: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  figcaption {
+    margin-block-start: var(--s-3);
+    max-width: var(--measure);
+    font-size: var(--t-sm);
+    line-height: var(--lh-normal);
+    color: var(--color-text-muted);
+  }
+</style>

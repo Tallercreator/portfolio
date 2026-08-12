@@ -1,0 +1,47 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="page inner">
+    <ul class="contacts">
+      <li><a href="mailto:tallerthecreator@mail.ru">tallerthecreator@mail.ru</a></li>
+      <li><a href="https://t.me/talleeerrr" rel="me noopener">t.me/talleeerrr</a></li>
+    </ul>
+    <p class="meta">© {year} · {t('footer.builtWith')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-block-start: 1px solid var(--color-border);
+    padding-block: var(--s-6);
+    font-size: var(--t-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3) var(--s-6);
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+  }
+</style>

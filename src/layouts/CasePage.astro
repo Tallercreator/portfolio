@@ -1,0 +1,222 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import { useTranslations, localizePath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  entry: CollectionEntry<'cases'>;
+  lang: Lang;
+  slug: string;
+  next?: { title: string; slug: string };
+}
+
+const { entry, lang, slug, next } = Astro.props;
+const { title, outcome, summary, role, timeline, team, year, tags, confidential } = entry.data;
+const { Content } = await render(entry);
+const t = useTranslations(lang);
+---
+
+<Base title={title} description={summary}>
+  <article class="case">
+    <header class="page hero">
+      <p class="crumb">
+        <a href={`${localizePath('/', lang)}#work`}>{t('case.back')}</a>
+      </p>
+
+      <h1>{title}</h1>
+      <p class="outcome">{outcome}</p>
+
+      <dl class="meta">
+        <div>
+          <dt>{t('case.role')}</dt>
+          <dd>{role}</dd>
+        </div>
+        {
+          timeline && (
+            <div>
+              <dt>{t('case.timeline')}</dt>
+              <dd>{timeline}</dd>
+            </div>
+          )
+        }
+        {
+          team && (
+            <div>
+              <dt>{t('case.team')}</dt>
+              <dd>{team}</dd>
+            </div>
+          )
+        }
+        {
+          year && (
+            <div>
+              <dt>{lang === 'ru' ? 'Год' : 'Year'}</dt>
+              <dd>{year}</dd>
+            </div>
+          )
+        }
+      </dl>
+
+      {tags.length > 0 && <p class="tags">{tags.join(' · ')}</p>}
+
+      {confidential && <p class="confidential">{t('case.confidential')}</p>}
+    </header>
+
+    <div class="page case-body">
+      <Content />
+    </div>
+
+    {
+      next && (
+        <nav class="page next" aria-label={t('case.next')}>
+          <a href={localizePath(`/case/${next.slug}`, lang)}>
+            <span class="next-label">{t('case.next')}</span>
+            <span class="next-title">{next.title}</span>
+          </a>
+        </nav>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .hero {
+    padding-block: var(--s-8) var(--s-7);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .crumb {
+    margin-block-end: var(--s-6);
+    font-size: var(--t-sm);
+  }
+
+  .crumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .crumb a:hover {
+    color: var(--color-text);
+  }
+
+  h1 {
+    max-width: 20ch;
+    font-size: clamp(var(--t-2xl), 5vw, var(--t-4xl));
+  }
+
+  .outcome {
+    margin-block-start: var(--s-4);
+    max-width: 34ch;
+    font-size: clamp(var(--t-md), 2.5vw, var(--t-xl));
+    line-height: var(--lh-snug);
+    color: var(--color-text-secondary);
+    text-wrap: balance;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4) var(--s-7);
+    margin-block-start: var(--s-7);
+    font-size: var(--t-sm);
+  }
+
+  .meta dt {
+    color: var(--color-text-muted);
+  }
+
+  .meta dd {
+    margin: 0;
+    margin-block-start: var(--s-1);
+  }
+
+  .tags {
+    margin-block-start: var(--s-4);
+    font-size: var(--t-xs);
+    color: var(--color-text-muted);
+  }
+
+  .confidential {
+    margin-block-start: var(--s-5);
+    max-width: var(--measure);
+    padding: var(--s-3) var(--s-4);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+    font-size: var(--t-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .case-body {
+    padding-block-start: var(--s-8);
+  }
+
+  /* Типографика тела кейса. Ширина строки держится жёстко,
+     из колонки выходят только изображения. */
+  .case-body :global(p),
+  .case-body :global(ul),
+  .case-body :global(ol),
+  .case-body :global(blockquote) {
+    max-width: var(--measure);
+  }
+
+  .case-body :global(> * + *) {
+    margin-block-start: var(--s-4);
+  }
+
+  .case-body :global(h2) {
+    margin-block-start: var(--s-9);
+    padding-block-start: var(--s-4);
+    border-block-start: 1px solid var(--color-border);
+    font-size: var(--t-xl);
+  }
+
+  .case-body :global(h2 + *) {
+    margin-block-start: var(--s-4);
+  }
+
+  .case-body :global(h3) {
+    margin-block-start: var(--s-6);
+    font-size: var(--t-md);
+  }
+
+  .case-body :global(strong) {
+    font-weight: var(--fw-semibold);
+  }
+
+  .case-body :global(blockquote) {
+    padding-inline-start: var(--s-4);
+    border-inline-start: 2px solid var(--color-border-strong);
+    color: var(--color-text-secondary);
+  }
+
+  .next {
+    margin-block-start: var(--s-9);
+    padding-block-start: var(--s-6);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .next a {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--s-1);
+    text-decoration: none;
+  }
+
+  .next-label {
+    font-size: var(--t-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .next-title {
+    font-size: var(--t-lg);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .next a:hover .next-title {
+    color: var(--color-accent);
+  }
+</style>
