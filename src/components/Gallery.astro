@@ -4,9 +4,11 @@ import type { ImageMetadata } from 'astro';
 
 interface Props {
   heading: string;
+  /** Одна строка под заголовком: откуда эти картинки и что здесь концепт. */
+  note?: string;
 }
 
-const { heading } = Astro.props;
+const { heading, note } = Astro.props;
 
 /*
   Картинки подхватываются из папки сами — достаточно положить файл.
@@ -27,6 +29,7 @@ const images = Object.entries(files)
   images.length > 0 && (
     <section class="page gallery" aria-labelledby="gallery-heading">
       <h2 id="gallery-heading">{heading}</h2>
+      {note && <p class="note">{note}</p>}
 
       {/*
         Раздел намеренно без ссылок: это не кейсы и кликать тут не на что.
@@ -56,11 +59,18 @@ const images = Object.entries(files)
   }
 
   h2 {
-    margin-block-end: var(--s-6);
+    margin-block-end: var(--s-3);
     font-size: var(--t-xs);
     font-weight: var(--fw-medium);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .note {
+    max-width: var(--measure);
+    margin-block-end: var(--s-6);
+    font-size: var(--t-sm);
     color: var(--color-text-muted);
   }
 
